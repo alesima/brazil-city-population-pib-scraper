@@ -15,15 +15,11 @@ def main_instance():
             main = Main(verbose=True)
             yield main
 
-# Test initialization
-
 
 def test_init(main_instance):
     assert isinstance(main_instance.db, AsyncMock)
     assert isinstance(main_instance.city_scraper, AsyncMock)
     assert main_instance.verbose is True
-
-# Test logging method
 
 
 @pytest.mark.parametrize("level, color", [
@@ -38,8 +34,6 @@ def test_log(main_instance, level, color, capsys):
     assert color in captured.out
     expected_prefix = f"{color}[{level.upper()}] {Style.RESET_ALL}"
     assert f"{expected_prefix}Test message" in captured.out
-
-# Test process_city for a new city
 
 
 @pytest.mark.asyncio
@@ -64,8 +58,6 @@ async def test_process_city_new_city(main_instance):
         mock_print.assert_any_call(f"{Fore.GREEN}[INFO] {
                                    Style.RESET_ALL}Saved: TestCity/TS - Pop: 10000, PIB: 50000")
 
-# Test process_city when city exists
-
 
 @pytest.mark.asyncio
 async def test_process_city_existing_city(main_instance):
@@ -81,8 +73,6 @@ async def test_process_city_existing_city(main_instance):
         await main_instance.process_city(city_data)
         mock_print.assert_any_call(f"{Fore.GREEN}[INFO] {
                                    Style.RESET_ALL}City already exists: TestCity/TS (ID: 1)")
-
-# Test run method (very basic test due to complexity)
 
 
 @pytest.mark.asyncio
