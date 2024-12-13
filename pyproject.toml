@@ -21,6 +21,7 @@ aiosqlite = "^0.20.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.4"
+pytest-asyncio = "^0.25.0"
 
 [build-system]
 requires = ["poetry-core"]
