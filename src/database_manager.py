@@ -9,11 +9,13 @@ lock = asyncio.Lock()
 
 
 class DatabaseManager:
-    def __init__(self, db_url='sqlite+aiosqlite:///municipios.db'):
+    def __init__(self, db_url="sqlite+aiosqlite:///municipios.db"):
         self.engine = create_async_engine(
-            db_url, connect_args={"check_same_thread": False})
+            db_url, connect_args={"check_same_thread": False}
+        )
         self.Session = sessionmaker(
-            self.engine, class_=AsyncSession, expire_on_commit=False)
+            self.engine, class_=AsyncSession, expire_on_commit=False
+        )
 
     async def initialize(self):
         async with self.engine.connect() as conn:
@@ -27,8 +29,7 @@ class DatabaseManager:
                 await session.commit()
             except Exception as e:
                 await session.rollback()
-                raise RuntimeError(
-                    f"Failed to add city to database: {e}") from e
+                raise RuntimeError(f"Failed to add city to database: {e}") from e
 
     async def update_city(self, city: Municipio):
         async with lock, self.Session() as session, session.begin():
@@ -37,8 +38,7 @@ class DatabaseManager:
                 await session.commit()
             except Exception as e:
                 await session.rollback()
-                raise RuntimeError(
-                    f"Failed to update city in database: {e}") from e
+                raise RuntimeError(f"Failed to update city in database: {e}") from e
 
     async def get_all_cities(self) -> Sequence[Municipio]:
         async with self.Session() as session:
@@ -47,9 +47,7 @@ class DatabaseManager:
 
     async def get_city_by_id(self, id: int) -> Municipio:
         async with lock, self.Session() as session:
-            result = await session.execute(
-                select(Municipio).filter(Municipio.id == id)
-            )
+            result = await session.execute(select(Municipio).filter(Municipio.id == id))
             return result.scalar_one_or_none()
 
     async def search_city(self, query: str) -> Sequence[Municipio]:

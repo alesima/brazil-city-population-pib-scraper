@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "ibge-dash"
+name = "brazil-city-population-pib-scraper"
 version = "0.1.0"
-description = ""
+description = "A scraper for Brasil cities population and PIB (Gross Domestic Product) data."
 authors = ["Alex Silva <alexandre.silva@garupa.co>"]
 readme = "README.md"
 
@@ -23,6 +23,8 @@ prompt-toolkit = "^3.0.48"
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.4"
 pytest-asyncio = "^0.25.0"
+flake8 = "^7.1.1"
+pre-commit = "^4.0.1"
 
 [build-system]
 requires = ["poetry-core"]

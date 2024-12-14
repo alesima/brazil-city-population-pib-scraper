@@ -8,7 +8,7 @@ class Base(AsyncAttrs, DeclarativeBase):
 
 
 class Municipio(Base):
-    __tablename__ = 'municipios'
+    __tablename__ = "municipios"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     nome: Mapped[str] = mapped_column(String)

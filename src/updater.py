@@ -9,7 +9,7 @@ init(autoreset=True)
 
 class Updater:
     def __init__(self):
-        self.db = DatabaseManager(db_url='sqlite+aiosqlite:///municipios.db')
+        self.db = DatabaseManager(db_url="sqlite+aiosqlite:///municipios.db")
 
     async def get_user_input(self, prompt_message: str):
         return await asyncio.to_thread(prompt, prompt_message)
@@ -30,9 +30,15 @@ class Updater:
     async def update_city_fields(self, city):
         log(f"Atualizando cidade: {city.nome}", level="info")
 
-        possui_cicc = int(await self.get_user_input("Possui CICC (0 para Não ou 1 para Sim): "))
-        possui_gcm = int(await self.get_user_input("Possui GCM (0 para Não ou 1 para Sim): "))
-        possui_samu = int(await self.get_user_input("Possui SAMU (0 para Não ou 1 para Sim): "))
+        possui_cicc = int(
+            await self.get_user_input("Possui CICC (0 para Não ou 1 para Sim): ")
+        )
+        possui_gcm = int(
+            await self.get_user_input("Possui GCM (0 para Não ou 1 para Sim): ")
+        )
+        possui_samu = int(
+            await self.get_user_input("Possui SAMU (0 para Não ou 1 para Sim): ")
+        )
 
         city.possui_cicc = possui_cicc
         city.possui_gcm = possui_gcm

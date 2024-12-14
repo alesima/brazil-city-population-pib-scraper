@@ -8,8 +8,12 @@ from src.models import Municipio
 
 @pytest.fixture
 def db_manager():
-    with patch('src.database_manager.create_async_engine', new_callable=AsyncMock) as mock_engine:
-        with patch('src.database_manager.sessionmaker', new_callable=AsyncMock) as mock_sessionmaker:
+    with patch(
+        "src.database_manager.create_async_engine", new_callable=AsyncMock
+    ) as mock_engine:
+        with patch(
+            "src.database_manager.sessionmaker", new_callable=AsyncMock
+        ) as mock_sessionmaker:
             mock_engine.return_value = AsyncMock(spec=AsyncEngine)
             mock_sessionmaker.return_value = AsyncMock(spec=AsyncSession)
             db_manager = DatabaseManager()
@@ -54,8 +58,7 @@ async def test_get_all_cities(db_manager):
     db_manager.engine.begin.return_value = mock_conn
     mock_result = AsyncMock()
     mock_conn.execute.return_value = mock_result
-    mock_result.scalars.return_value.all.return_value = [
-        MagicMock(spec=Municipio)]
+    mock_result.scalars.return_value.all.return_value = [MagicMock(spec=Municipio)]
 
     result = await db_manager.get_all_cities()
 
@@ -74,8 +77,7 @@ async def test_get_city_by_id(db_manager):
 
     city = await db_manager.get_city_by_id(1)
 
-    mock_conn.execute.assert_awaited_with(
-        select(Municipio).filter(Municipio.id == 1))
+    mock_conn.execute.assert_awaited_with(select(Municipio).filter(Municipio.id == 1))
     mock_result.scalar_one_or_none.assert_called_once()
     assert city is not None
 
