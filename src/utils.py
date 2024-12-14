@@ -1,4 +1,5 @@
 import re
+from colorama import Fore, Style
 from unicodedata import normalize
 
 
@@ -21,3 +22,13 @@ def slugify(text: str):
 
     # Return the transformed string
     return slug
+
+
+def log(message, level="info"):
+    """Log messages with color depending on the level."""
+    if level == "info":
+        print(f"{Fore.GREEN}[INFO] {Style.RESET_ALL}{message}")
+    elif level == "warning":
+        print(f"{Fore.YELLOW}[WARNING] {Style.RESET_ALL}{message}")
+    elif level == "error":
+        print(f"{Fore.RED}[ERROR] {Style.RESET_ALL}{message}")
